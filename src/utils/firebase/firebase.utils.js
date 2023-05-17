@@ -1,45 +1,41 @@
-import {initializeApp } from 'firebase/app';
+
+import { initializeApp } from 'firebase/app';
 import {
-    getAuth, 
-    signInWithPopup, 
-    signInWithRedirect, 
-    GoogleAuthProvider
+  getAuth,
+  signInWithRedirect,
+  signInWithPopup,
+  GoogleAuthProvider,
 } from 'firebase/auth';
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  SnapshotMetadata
-} from 'firebase/firestore'
+import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDNokpiNjEDBAxcHf0w-YKZo6_n8OXKINo",
-    authDomain: "crwn-clothing-db-4ff35.firebaseapp.com",
-    projectId: "crwn-clothing-db-4ff35",
-    storageBucket: "crwn-clothing-db-4ff35.appspot.com",
-    messagingSenderId: "203073936575",
-    appId: "1:203073936575:web:02a5dd1b1f6e35bcd3ba0a"
-  };
-  
-  // Initialize Firebase
-  const firebaseApp = initializeApp(firebaseConfig);
+  apiKey: 'AIzaSyDDU4V-_QV3M8GyhC9SVieRTDM4dbiT0Yk',
+  authDomain: 'crwn-clothing-db-98d4d.firebaseapp.com',
+  projectId: 'crwn-clothing-db-98d4d',
+  storageBucket: 'crwn-clothing-db-98d4d.appspot.com',
+  messagingSenderId: '626766232035',
+  appId: '1:626766232035:web:506621582dab103a4d08d6',
+};
 
-  const provider = new GoogleAuthProvider();
-  provider.setCustomParameters({
-    prompt: "select_account"
-  });
+const firebaseApp = initializeApp(firebaseConfig);
 
-  export const auth = getAuth();
-  export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+const googleProvider = new GoogleAuthProvider();
 
-  //initializes a connection to a Firestore database
-  export const db = getFirestore()
+googleProvider.setCustomParameters({
+  prompt: 'select_account',
+});
 
- export const createUserDocumentFromAuth = async (userAuth) => {
+export const auth = getAuth();
+export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googleProvider)
+
+
+export const db = getFirestore();
+
+export const createUserDocumentFromAuth = async (userAuth) => {
   const userDocRef = doc(db, 'users', userAuth.uid);
 
-  const userSnapshot = await getDoc(userDocRef)
+  const userSnapshot = await getDoc(userDocRef);
 
   //check if the userSnapshot exists
   console.log(userSnapshot.exists())
